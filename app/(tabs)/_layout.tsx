@@ -3,10 +3,8 @@ import clsx from "clsx";
 import { Image } from "expo-image";
 import { Tabs } from "expo-router";
 import { View } from "react-native";
-import { safeAreaInsets } from "react-native-safe-area-context";
 
 const TabLayout = () => {
-    const insets = safeAreaInsets();
     const TabIcon = ({ focused, icon }: TabIconProps) => {
         return (
             <View className="tabs-icon">
@@ -17,9 +15,18 @@ const TabLayout = () => {
         );
     };
     return (
-        <Tabs screenOptions={{ headerShown: false, tabBarShowLabel: false,
-            tabBarStyle: { position: "transparent", borderTopWidth: 0, elevation: 0 }
-         }}>// Hide the header for all screens in the (tabs) group
+        <Tabs
+            screenOptions={{
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarStyle: {
+                    position: "absolute",
+                    backgroundColor: "transparent",
+                    borderTopWidth: 0,
+                    elevation: 0,
+                },
+            }}
+        >
             {tabs.map((tab) => (
                 <Tabs.Screen
                     key={tab.name}
@@ -27,18 +34,13 @@ const TabLayout = () => {
                     options={{
                         title: tab.title,
                         tabBarIcon: ({ focused }) => (
-                        <TabIcon focused={focused} icon={tab.icon} />
-                    )
-                }}
-            />
-        ))}
-    </Tabs>
-)
+                            <TabIcon focused={focused} icon={tab.icon} />
+                        ),
+                    }}
+                />
+            ))}
+        </Tabs>
+    );
 };
-export default TabLayout
 
-/*<Tabs.Screen name="index" options={{ title: "Home" }} />
-        <Tabs.Screen name="subscriptions" options={{ title: "Subscriptions" }} />
-        <Tabs.Screen name="insights" options={{ title: "Insights" }} />
-        <Tabs.Screen name="settings" options={{ title: "Settings" }} />
-        <Tabs.Screen name="subscriptions" options={{ href: null }} />*/
+export default TabLayout;
