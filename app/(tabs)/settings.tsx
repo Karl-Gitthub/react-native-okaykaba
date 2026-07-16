@@ -1,4 +1,4 @@
-import { styled } from "nativewind";
+/*import { styled } from "nativewind";
 import React from 'react';
 import { Text } from 'react-native';
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
@@ -9,6 +9,19 @@ const settings = () => {
     <SafeAreaView className="flex-1 bg-background p-5">
       <Text>settings</Text>
     </SafeAreaView>
+  )
+}
+
+export default settings*/
+
+import React from 'react'
+import { Text, View } from 'react-native'
+
+const settings = () => {
+  return (
+    <View>
+      <Text>settings</Text>
+    </View>
   )
 }
 

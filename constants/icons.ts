@@ -2,6 +2,7 @@ import activity from "@/assets/icons/activity.png";
 import add from "@/assets/icons/add.png";
 import adobe from "@/assets/icons/adobe.png";
 import back from "@/assets/icons/back.png";
+import calendar from "@/assets/icons/calendar.png";
 import canva from "@/assets/icons/canva.png";
 import claude from "@/assets/icons/claude.png";
 import dropbox from "@/assets/icons/dropbox.png";
@@ -36,6 +37,7 @@ export const icons = {
     github,
     claude,
     canva,
+    calendar,
 } as const;
 
 export type IconKey = keyof typeof icons;
