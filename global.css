@@ -11,6 +11,7 @@
     --color-muted: #f6eecf;
     --color-muted-foreground: rgba(0, 0, 0, 0.6);
     --color-primary: #081126;
+    --color-secondary: #FFFFFF;
     /*--color-accent: #ea7a53;*/
     --color-accent: #C621E5;
     --color-border: rgba(0, 0, 0, 0.1);
@@ -92,7 +93,7 @@
     }
 
     .home-balance-card {
-        @apply my-2.5 min-h-50 justify-between gap-5 rounded-bl-4xl rounded-tr-4xl bg-accent p-6;
+        @apply my-3 min-h-35 justify-between gap-5 rounded-bl-4xl rounded-tr-4xl bg-secondary p-6;
     }
 
     .home-balance-label {
@@ -152,7 +153,7 @@
     }
 
     .sub-card {
-        @apply rounded-2xl border border-border p-4;
+        @apply rounded-bl-2xl rounded-tr-2xl border border-border p-4;
     }
 
     .sub-card-expanded {

@@ -1,6 +1,7 @@
 import "@/global.css";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 export default function RootLayout() {
@@ -21,6 +22,12 @@ export default function RootLayout() {
   
   if (!fontsLoaded) return null;
 
-  return <Stack screenOptions={{ headerShown: false }} />;
-  
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(auth)" />
+      <Stack.Screen name="onboarding" />
+      <Stack.Screen name="subscriptions/[id]" />
+    </Stack>
+  );
 }
