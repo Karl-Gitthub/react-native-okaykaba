@@ -1,0 +1,30 @@
+diff --git a/node_modules/react-native-css/dist/commonjs/native/styles/index.js b/node_modules/react-native-css/dist/commonjs/native/styles/index.js
+index 222296d..56155c6 100644
+--- a/node_modules/react-native-css/dist/commonjs/native/styles/index.js
++++ b/node_modules/react-native-css/dist/commonjs/native/styles/index.js
+@@ -372,6 +372,10 @@ function nativeStyleMapping(config, props) {
+     if (styleValue === undefined) {
+       continue;
+     }
++    if (path === true) {
++      props[key] = styleValue;
++      continue;
++    }
+     let target = props;
+     const tokens = path.split(".");
+     const lastToken = tokens.pop();
+diff --git a/node_modules/react-native-css/dist/module/native/styles/index.js b/node_modules/react-native-css/dist/module/native/styles/index.js
+index 067f8ed..f99d99c 100644
+--- a/node_modules/react-native-css/dist/module/native/styles/index.js
++++ b/node_modules/react-native-css/dist/module/native/styles/index.js
+@@ -368,6 +368,10 @@ function nativeStyleMapping(config, props) {
+     if (styleValue === undefined) {
+       continue;
+     }
++    if (path === true) {
++      props[key] = styleValue;
++      continue;
++    }
+     let target = props;
+     const tokens = path.split(".");
+     const lastToken = tokens.pop();
