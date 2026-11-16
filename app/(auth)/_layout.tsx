@@ -1,15 +1,2 @@
-import "@/global.css";
-import { useAuth } from "@clerk/expo";
-import { Redirect, Stack } from "expo-router";
-
-export default function RootLayout() {
-  const { isLoaded, isSignedIn } = useAuth();
-
-  if (!isLoaded) return null;
-
-  if (isSignedIn) {
-    return <Redirect href="/(tabs)" />;
-  }
-
-  return <Stack screenOptions={{ headerShown: false }} />; // Hide the header for all screens in the (auth) group
-}
+import { Stack } from 'expo-router';
+export default function Layout() { return <Stack screenOptions={{ headerShown: false }}/>; }

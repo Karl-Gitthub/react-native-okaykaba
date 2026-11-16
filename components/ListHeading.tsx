@@ -6,8 +6,8 @@ const listheading = ({title}: ListHeadingProps) => {
     <View className="list-head">
       <Text className="list-title">{title}</Text>
 
-      <TouchableOpacity className="list-action">
-        <Text className="list-action-text">See All</Text>
+      <TouchableOpacity className="list-action" disabled accessibilityLabel="See all is not implemented yet">
+        <Text className="list-action-text">Coming soon</Text>
       </TouchableOpacity>
 
       

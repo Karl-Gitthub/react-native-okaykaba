@@ -1,22 +1,12 @@
-import { useClerk } from '@clerk/expo'
-import { styled } from 'nativewind'
-import React from 'react'
-import { Pressable, Text } from 'react-native'
-import { SafeAreaView as RNSafeAreaView } from 'react-native-safe-area-context'
-
-const SafeAreaView = styled(RNSafeAreaView)
-
-const Settings = () => {
-  const { signOut } = useClerk()
-
-  return (
-    <SafeAreaView className="flex-1 bg-background p-5">
-      <Text className="list-title mb-6">Settings</Text>
-      <Pressable className="auth-button" onPress={() => signOut()}>
-        <Text className="auth-button-text">Sign Out</Text>
-      </Pressable>
-    </SafeAreaView>
-  )
-}
-
-export default Settings
+import React, { useState } from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useAuthState } from '@/components/AuthState';
+import { useWellbeing } from '@/components/WellbeingState';
+import { supabase } from '@/lib/supabase';
+import { Button } from '@/components/DesignSystem';
+import { palette as c } from '@/lib/theme';
+export default function Settings() { const { demo, setDemo, session } = useAuthState(), { profile, status, notice, importDemo, retry } = useWellbeing(), router = useRouter(); const [confirm, setConfirm] = useState(false), [message, setMessage] = useState(''); return <ScrollView contentContainerStyle={{ padding: 28, paddingTop: 44, paddingBottom: 120, gap: 22, backgroundColor: c.background, flexGrow: 1 }}><Text style={{ fontFamily: 'sans-bold', fontSize: 28, color: c.ink }}>Your space</Text><View style={{ padding: 22, borderRadius: 22, backgroundColor: c.surface, gap: 10 }}><Text style={{ fontFamily: 'sans-semibold', fontSize: 21, color: c.ink }}>{profile.name || 'Welcome'}</Text><Text style={{ color: c.muted }}>{demo ? 'Demo · saved only on this device' : session?.user.email}</Text><Text accessibilityLiveRegion="polite" style={{ color: c.muted }}>{notice || status}</Text></View><Button title="Edit profile" onPress={() => router.push('/account-setup')}/><Button title="Replay introduction" onPress={() => router.push('/onboarding')}/>{!!notice && <Button title="Retry saving" onPress={retry}/>}<Text style={{ color: c.muted, lineHeight: 24 }}>Your journal and moods are private to your demo or account. Demo records are never automatically uploaded. Reduced motion follows your device setting.</Text>{demo ? <Button title="Sign in or create account" onPress={() => { setDemo(false); router.push('/(auth)/sign-in'); }}/> : <><Button title="Import demo records…" onPress={() => setConfirm(true)}/>{confirm && <View style={{ gap: 12 }}><Text style={{ color: c.ink }}>Upload this device’s demo journal entries, moods, and tasks into this signed-in account? Existing account records with the same ID are kept.</Text><Button title="Import into my account" onPress={async () => { await importDemo(); setConfirm(false); setMessage('Import queued. Check save status above.'); }}/><Pressable onPress={() => setConfirm(false)}><Text style={{ color: c.action, padding: 12 }}>Cancel</Text></Pressable></View>}<Button title="Sign out" onPress={async () => { const result = await supabase?.auth.signOut(); if (result?.error) {
+    setMessage(result.error.message);
+    return;
+} router.replace('/(auth)/sign-in'); }}/></>}<Text accessibilityLiveRegion="polite" style={{ color: c.muted }}>{message}</Text></ScrollView>; }
