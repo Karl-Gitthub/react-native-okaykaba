@@ -1,0 +1,27 @@
+[
+  {
+    "file": "01-shared-setup-header.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-da5daf4b-1ccf-482b-a46b-19d2e7272193.png",
+    "referenceFiles": [
+      "07-preferred-name.png",
+      "08-practice-mood.png",
+      "09-optional-goal.png"
+    ]
+  },
+  {
+    "file": "02-enlarged-text-moods.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-e4f5d7b3-e4e3-4d7a-a673-9dc85f911e75.png",
+    "referenceFiles": [
+      "11-keyboard-and-large-text.png",
+      "08-practice-mood.png"
+    ]
+  },
+  {
+    "file": "03-change-email-errors.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-dd9dfd50-d54d-46f3-bea4-bf7853c5dda9.png",
+    "referenceFiles": [
+      "04b-change-email-and-links.png",
+      "04a-email-verification.png"
+    ]
+  }
+]

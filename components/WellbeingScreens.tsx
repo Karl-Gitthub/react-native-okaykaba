@@ -1,73 +1,151 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect, useRouter } from 'expo-router';
-import React, { useCallback, useRef, useState } from 'react';
-import { AccessibilityInfo, Animated, Pressable, ScrollView, StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppIcon } from '@/components/AppIcon';
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { Modal, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { useWellbeing, localDate } from './WellbeingState';
-import { Carousel, MoodFace, MoodGauge } from './DesignSystem';
-const accent = '#3D6C95';
-const actionFill: ViewStyle = { backgroundColor: accent };
-const faces = ['😡', '🙁', '😐', '🙂', '😄'];
-const labels = ['Angry', 'Low', 'Okay', 'Good', 'Great'];
-function Page({ children }: React.PropsWithChildren) {
-    const opacity = useRef(new Animated.Value(1)).current;
-    useFocusEffect(useCallback(() => {
-        let live = true;
-        AccessibilityInfo.isReduceMotionEnabled().then(reduced => {
-            if (live && !reduced) {
-                opacity.setValue(0);
-                Animated.timing(opacity, { toValue: 1, duration: 200, useNativeDriver: true }).start();
-            }
-        });
-        return () => { live = false; opacity.stopAnimation(); opacity.setValue(1); };
-    }, [opacity]));
-    return <SafeAreaView style={{ flex: 1, backgroundColor: '#FAFBF7' }}><Animated.View style={{ flex: 1, opacity }}><ScrollView contentContainerStyle={s.page}>{children}</ScrollView></Animated.View></SafeAreaView>;
-}
-function Heading({ title, back = false }: {
-    title: string;
-    back?: boolean;
-}) {
-    const router = useRouter();
-    return <View style={s.header}>{back ? <Pressable accessibilityLabel="Back to home" onPress={() => router.replace('/(tabs)')}><Ionicons name="arrow-back" size={25}/></Pressable> : <View style={s.avatar}><Ionicons name="person-outline" size={28} color={accent}/></View>}<Text style={s.headerTitle}>{title}</Text><View style={{ width: 44 }}/></View>;
-}
+import { Carousel, CarouselPressable, MoodFace, MoodGauge, Button, useReducedMotion } from './DesignSystem';
+import { BackHeader, ChromeButton, Screen, ui } from './Screen';
+import { GlassSurface } from './GlassSurface';
+import { palette as c } from '@/lib/theme';
+import { moodLabels } from '@/lib/calendar';
+import { dailyReflections } from '@/lib/inspiration';
+
 export function HomeScreen() {
-    const router = useRouter();
-    const { moods, saveMood, ready, notice, entries, profile, status } = useWellbeing();
-    const [query, setQuery] = useState('');
-    const [tip, setTip] = useState(false);
-    const selected = moods.find(m => m.date === localDate());
-    const activities = [{ title: 'JOURNAL', icon: 'book-outline', action: () => router.push('/(tabs)/insights') }, { title: 'SELF CARE TIPS', icon: 'heart-outline', action: () => setTip(!tip) }, { title: 'DAILY TO-DO', icon: 'checkbox-outline', action: () => router.push('/(tabs)/tasks') }] as const;
-    return <Page><Heading title="Home"/><Text style={s.greeting}>Hi, <Text style={{ color: accent }}>{profile.name || "friend"}</Text></Text><Text style={s.subtitle}>How are you feeling today?</Text>
-    <View style={s.card}><Text style={s.section}>Daily Mood</Text><View style={s.moods}>{faces.map((face, i) => <Pressable key={face} accessibilityRole="button" accessibilityLabel={`Mood: ${labels[i]}`} accessibilityState={{ selected: selected?.value === i }} disabled={!ready} onPress={() => saveMood(i)} style={({ pressed }) => [s.mood, selected?.value === i && { backgroundColor: '#EAF1F8', borderColor: accent }, { transform: [{ scale: pressed ? .88 : 1 }] }]}><MoodFace value={i} size={42}/></Pressable>)}</View>{selected && <Text accessibilityLiveRegion="polite" style={s.small}>Today: {labels[selected.value]} · {status}</Text>}{selected && <MoodGauge value={selected.value}/>}</View>
-    <View style={s.search}><Ionicons name="search-outline" size={26}/><TextInput style={s.searchInput} placeholder="Search" value={query} onChangeText={setQuery} accessibilityLabel="Search activities"/></View>
-    <Text style={s.section}>Activities</Text><ActivityCarousel activities={activities.filter(a => a.title.toLowerCase().includes(query.toLowerCase()))}/>{!!query && !activities.some(a => a.title.toLowerCase().includes(query.toLowerCase())) && <Text style={s.small}>No matching activities.</Text>}
-    {tip && <View style={s.card}><Text style={s.section}>A moment for yourself</Text><Text style={s.body}>Pause, take a comfortable breath, and notice something around you. Choose one small thing you would enjoy doing today.</Text><Text style={s.small}>Preview content · detailed self-care screens are not linked in the reference.</Text></View>}
-    <Text style={s.section}>Recent Activities</Text>{entries.length ? entries.slice(0, 3).map(e => <Pressable key={e.id} onPress={() => router.push('/(tabs)/insights')} style={s.card}><Text style={s.body} numberOfLines={2}>{e.text}</Text><Text style={s.small}>{new Date(e.date).toLocaleDateString()}</Text></Pressable>) : <Text style={s.small}>Your saved journal entries will appear here.</Text>}
-    <Text style={s.privacy}>{notice || status}</Text>
-  </Page>;
+  const router = useRouter(), reduced = useReducedMotion();
+  const { fontScale } = useWindowDimensions();
+  const { moods, saveMood, ready, notice, profile, status, preferences, updatePreferences } = useWellbeing();
+  const [activity, setActivity] = useState(0);
+  const [panel, setPanel] = useState<'mood' | 'notifications' | null>(null);
+  const selected = moods.find(m => m.date === localDate());
+  const thought = dailyReflections(preferences.bibleVerses)[0];
+  const saved = preferences.savedReflections.includes(thought.id);
+  const activities = [
+    { title: 'Journal', subtitle: 'Write and reflect', icon: 'journal', route: '/(tabs)/insights' },
+    { title: 'Self-care', subtitle: 'Take a moment', icon: 'selfCare', route: '/(tabs)/self-care' },
+    { title: 'To-do', subtitle: 'Plan small steps', icon: 'tasks', route: '/(tabs)/tasks' },
+    { title: 'Daily words', subtitle: 'Read a reflection', icon: 'dailyWords', route: '/(tabs)/inspiration' },
+  ] as const;
+  return <Screen contentStyle={s.homePage}>
+    <View style={ui.header}>
+      <Text style={s.wordmark}>OkayKaba</Text>
+      <View style={s.headerActions}>
+        <ChromeButton label="Open your account" onPress={() => router.push('/(tabs)/settings')}>
+          <AppIcon name="account" size={22} color={c.action}/>
+        </ChromeButton>
+        <ChromeButton label="Notifications" onPress={() => setPanel('notifications')}>
+          <AppIcon name="bell" size={23} color={c.ink}/>
+        </ChromeButton>
+      </View>
+    </View>
+    <Text accessibilityRole="header" style={ui.title}>Hi, {profile.name || 'friend'}</Text>
+    <View style={s.checkIn}>
+      <Text accessibilityRole="header" style={ui.section}>How are you feeling today?</Text>
+      <Text style={ui.caption}>{selected ? 'Today’s check-in · ' + moodLabels[selected.value] : 'Choose a mood to check in.'}</Text>
+      <View style={s.moods}>{moodLabels.map((label, i) => <Pressable key={label} accessibilityRole="button" accessibilityLabel={'Mood: ' + label} accessibilityHint={selected?.value === i ? 'Tap again to see your check-in and mood gauge.' : 'Save this mood for today.'} accessibilityState={{ selected: selected?.value === i }} disabled={!ready}
+        onPress={() => selected?.value === i ? setPanel('mood') : saveMood(i)} style={({ pressed }) => [s.mood, { opacity: pressed ? .7 : 1 }]}>
+        <View style={[s.faceOutline, selected?.value === i && s.selectedFace]}><MoodFace value={i} size={38}/></View>
+        <Text style={[s.moodLabel, selected?.value === i && s.selectedMoodLabel]}>{label}</Text>
+      </Pressable>)}</View>
+    </View>
+    <View style={{ gap: 10 }}>
+      <Text accessibilityRole="header" style={ui.section}>Activities</Text>
+      <Carousel cards indicators={false} label="Activities" index={activity} onIndex={setActivity} style={{ height: 128 + 62 * Math.max(0, fontScale - 1) }}>
+        {activities.map(a => <CarouselPressable key={a.title} accessibilityRole="button" accessibilityLabel={'Open ' + a.title} onPress={() => router.push(a.route)} style={({ pressed }) => [s.activity, { opacity: pressed ? .86 : 1 }]}>
+          <AppIcon name={a.icon} size={24} color={c.action}/>
+          <View style={{ gap: 3 }}>
+            <Text style={s.activityTitle}>{a.title}</Text>
+            <Text style={s.activitySubtitle}>{a.subtitle}</Text>
+          </View>
+        </CarouselPressable>)}
+      </Carousel>
+    </View>
+    <View style={s.thought}>
+      <Text style={ui.eyebrow}>TODAY’S REFLECTION</Text>
+      <Pressable accessibilityRole="button" accessibilityLabel="Read today's inspiration" onPress={() => router.push('/(tabs)/inspiration')} style={{ gap: 4 }}>
+        <Text numberOfLines={3} style={{ fontFamily: 'sans-bold', color: c.ink, fontSize: 18, lineHeight: 24, letterSpacing: -.5 }}>{thought.text}</Text><Text style={[ui.caption, { fontSize: 11, lineHeight: 16 }]}>{thought.source}</Text>
+      </Pressable>
+      <View style={[ui.header, { minHeight: 36 }]}>
+        <Pressable accessibilityRole="button" accessibilityLabel={saved ? 'Unsave reflection' : 'Save reflection'} accessibilityState={{ selected: saved }} disabled={!ready} onPress={() => updatePreferences({ savedReflections: saved ? preferences.savedReflections.filter(id => id !== thought.id) : [...preferences.savedReflections, thought.id] })} style={s.inlineAction}>
+          <AppIcon name="bookmark" weight={saved ? 'fill' : 'regular'} size={19} color={c.ink}/><Text style={ui.link}>{saved ? 'Saved' : 'Save'}</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" onPress={() => router.push('/(tabs)/inspiration')} style={s.inlineAction}><Text style={ui.link}>Read & reflect</Text><AppIcon name="arrowRight" size={17} color={c.action}/></Pressable>
+      </View>
+    </View>
+    <Pressable accessibilityRole="button" onPress={() => router.push('/(tabs)/talk')} style={s.talk}>
+      <AppIcon name="chat" size={23} color={c.ink}/><View style={{ flex: 1, gap: 2 }}><Text style={{ fontFamily: 'sans-bold', color: c.ink, fontSize: 14 }}>Talk it through</Text><Text style={[ui.caption, { fontSize: 11, lineHeight: 16 }]}>AI support · Not connected yet</Text></View><AppIcon name="caretRight" size={18} color={c.ink}/>
+    </Pressable>
+    {(!!notice || status === 'Saving…') && <Text accessibilityLiveRegion="polite" style={ui.caption}>{notice || status}</Text>}
+    <Modal visible={panel !== null} transparent animationType={reduced ? 'none' : 'fade'} onRequestClose={() => setPanel(null)}>
+      <View style={s.backdrop}>
+        <Pressable style={StyleSheet.absoluteFill} accessibilityRole="button" accessibilityLabel="Close details" onPress={() => setPanel(null)}/>
+        <GlassSurface strong style={s.dialog} accessibilityViewIsModal>
+          <Text style={ui.section}>{panel === 'mood' ? 'Today’s check-in' : 'Notifications'}</Text>
+          {panel === 'mood' && selected ? <>
+            <View style={{ alignItems: 'center', gap: 8 }}><MoodFace value={selected.value} size={70}/><Text style={ui.section}>{moodLabels[selected.value]}</Text></View>
+            <MoodGauge value={selected.value}/><Text accessibilityLiveRegion="polite" style={ui.caption}>{notice || status}</Text>
+          </> : <Text style={ui.body}>Reminders aren’t available in this build yet. No notifications are scheduled.</Text>}
+          <Button title="Done" onPress={() => setPanel(null)}/>
+        </GlassSurface>
+      </View>
+    </Modal>
+  </Screen>;
 }
+
 export function JournalScreen() {
-    const { entries, saveEntry, ready, notice, draft: text, setDraft: setText, status } = useWellbeing();
-    const [message, setMessage] = useState('');
-    return <Page><Heading title="Journal" back/><Text style={[s.greeting, { color: accent }]}>Mind Dump!</Text><Text style={s.body}>Express your feelings and journal your thoughts.</Text>
-    <TextInput maxLength={100000} style={s.editor} multiline textAlignVertical="top" placeholder="What’s on your mind?" accessibilityLabel="Journal entry" value={text} onChangeText={value => { setText(value); setMessage(''); }}/>
-    <Pressable accessibilityRole="button" disabled={!ready} onPress={() => { if (saveEntry(text)) {
-        setText('');
-        setMessage('Entry added. Saving…');
-    }
-    else
-        setMessage('Write something before saving.'); }} style={[s.save, actionFill]}><Text style={s.saveText}>Save now</Text></Pressable>
-    <Text accessibilityLiveRegion="polite" style={s.small}>{notice || (message === "Entry added. Saving…" ? status : message)}</Text><Text style={s.section}>Your entries</Text>{entries.length === 0 && <Text style={s.small}>No entries yet. Your writing stays in your current demo or account.</Text>}{entries.map(e => <View key={e.id} style={s.card}><Text style={s.small}>{new Date(e.date).toLocaleString()}</Text><Text style={s.body}>{e.text}</Text></View>)}
-  </Page>;
+  const { entries, saveEntry, ready, notice, draft: text, setDraft: setText, status } = useWellbeing();
+  const [expanded, setExpanded] = useState<string | null>(null);
+  return <Screen keyboard>
+    <BackHeader title="Journal"/>
+    <View style={s.intro}>
+      <Text accessibilityRole="header" style={ui.title}>A space to write</Text>
+      <Text style={ui.body}>Write down what you want to remember or work through.</Text>
+    </View>
+    <View style={s.checkIn}>
+      <Text accessibilityRole="header" style={ui.section}>New entry</Text>
+      <TextInput maxLength={100000} style={[ui.input, s.editor]} multiline textAlignVertical="top"
+        placeholder="What’s on your mind?" placeholderTextColor={c.muted} accessibilityLabel="Journal entry"
+        value={text} onChangeText={setText}/>
+      <View style={s.editorFooter}>
+        <Text accessibilityLiveRegion="polite" style={[ui.caption, { flexShrink: 1 }]}>{notice || (text ? 'Draft · ' + status : status)}</Text>
+        <Button title="Save entry" disabled={!ready || !text.trim()} onPress={() => saveEntry(text)}/>
+      </View>
+    </View>
+    <Text accessibilityRole="header" style={ui.section}>Previous entries</Text>
+    {!entries.length && <Text style={ui.body}>Your saved entries will appear here.</Text>}
+    {entries.map(e => <Pressable key={e.id} accessibilityRole="button" accessibilityLabel={'Read journal entry from ' + new Date(e.date).toLocaleDateString()} accessibilityState={{ expanded: expanded === e.id }} onPress={() => setExpanded(expanded === e.id ? null : e.id)} style={s.entry}>
+      <View style={s.entryHeading}>
+        <AppIcon name="journal" size={19} color={c.action}/>
+        <Text style={[ui.link, { flex: 1, color: c.ink }]}>{new Date(e.date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</Text>
+        <AppIcon name={expanded === e.id ? 'caretUp' : 'caretDown'} size={17} color={c.muted}/>
+      </View>
+      <Text numberOfLines={expanded === e.id ? undefined : 2} style={[ui.body, { color: c.ink }]}>{e.text}</Text>
+    </Pressable>)}
+  </Screen>;
 }
 export { default as MoodScreen } from './MoodCalendar';
-function ActivityCarousel({ activities }: {
-    activities: readonly {
-        title: string;
-        icon: React.ComponentProps<typeof Ionicons>['name'];
-        action: () => void;
-    }[];
-}) { const [index, setIndex] = useState(0); return <Carousel key={activities.map(a => a.title).join()} index={Math.min(index, Math.max(0, activities.length - 1))} onIndex={setIndex} style={{ height: 205 }}>{activities.map(a => <Pressable key={a.title} accessibilityRole="button" accessibilityLabel={a.title} onPress={a.action} style={{ marginTop: 12, padding: 22, backgroundColor: '#EAF1F8', borderRadius: 22, flex: 1, justifyContent: 'space-between' }}><Ionicons name={a.icon} size={30} color={accent}/><Text style={{ fontFamily: 'sans-semibold', fontSize: 18, color: '#202833' }}>{a.title} →</Text></Pressable>)}</Carousel>; }
+
 const s = StyleSheet.create({
-    page: { padding: 28, paddingBottom: 110, gap: 12 }, header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 22 }, headerTitle: { fontSize: 22, fontFamily: 'sans-regular' }, avatar: { width: 54, height: 54, borderRadius: 30, backgroundColor: '#EAF1F8', alignItems: 'center', justifyContent: 'center' }, greeting: { fontSize: 29, fontFamily: 'sans-semibold', color: '#090b0b' }, subtitle: { fontSize: 22, fontFamily: 'sans-semibold', marginBottom: 8 }, section: { fontSize: 24, fontFamily: 'sans-semibold', color: '#090b0b' }, card: { backgroundColor: '#fff', borderRadius: 15, padding: 18, gap: 12, borderWidth: 1, borderColor: '#E1E8ED' }, moods: { flexDirection: 'row', justifyContent: 'space-between', gap: 2 }, mood: { padding: 2, borderRadius: 30, borderWidth: 2, borderColor: 'transparent' }, search: { flexDirection: 'row', alignItems: 'center', gap: 14, borderRadius: 40, padding: 16, backgroundColor: '#fff', marginVertical: 10, borderWidth: 1, borderColor: '#E1E8ED' }, searchInput: { flex: 1, fontSize: 16, fontFamily: 'sans-regular', minWidth: 0 }, activity: { width: 150, height: 175, borderRadius: 28, padding: 16, justifyContent: 'space-between', backgroundColor: accent }, activityIcon: { width: 46, height: 46, borderRadius: 25, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }, activityTitle: { color: '#fff', fontSize: 15, fontFamily: 'sans-semibold' }, body: { color: '#747974', fontSize: 17, lineHeight: 27, fontFamily: 'sans-regular' }, small: { color: '#777', fontSize: 13, lineHeight: 21, fontFamily: 'sans-regular' }, privacy: { fontSize: 11, color: '#888', lineHeight: 18, marginTop: 20 }, editor: { minHeight: 330, borderWidth: 1, borderColor: accent, borderRadius: 24, padding: 24, fontSize: 19, lineHeight: 30, fontFamily: 'sans-regular', backgroundColor: 'white', marginVertical: 8 }, save: { borderRadius: 32, padding: 16, alignItems: 'center', backgroundColor: accent }, saveText: { color: 'white', fontFamily: 'sans-semibold', fontSize: 17 },
+  homePage: { paddingTop: 12, gap: 20 },
+  wordmark: { flexShrink: 1, fontFamily: 'sans-extrabold', fontSize: 22, color: c.action, letterSpacing: -.7 },
+  headerActions: { flexDirection: 'row', gap: 6 },
+  intro: { gap: 5 },
+  checkIn: { borderRadius: 16, backgroundColor: c.surface, padding: 15, gap: 8 },
+  moods: { flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', gap: 3, paddingTop: 7 },
+  mood: { alignItems: 'center', gap: 3, paddingVertical: 3, minWidth: 44 },
+  faceOutline: { width: 44, height: 44, borderWidth: 1.5, borderColor: 'transparent', borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
+  selectedFace: { borderColor: c.accent, backgroundColor: c.paper },
+  selectedMoodLabel: { color: c.action, fontFamily: 'sans-bold' },
+  moodLabel: { fontSize: 11, lineHeight: 16, fontFamily: 'sans-medium', color: c.ink },
+  activity: { flex: 1, padding: 13, borderRadius: 15, justifyContent: 'space-between', backgroundColor: c.surface },
+  activityTitle: { color: c.ink, fontSize: 15, fontFamily: 'sans-bold' },
+  activitySubtitle: { color: c.muted, fontSize: 11, fontFamily: 'sans-regular' },
+  thought: { padding: 14, borderRadius: 18, backgroundColor: c.surface, gap: 6 },
+  inlineAction: { flexDirection: 'row', gap: 7, alignItems: 'center', minHeight: 36, paddingVertical: 4 },
+  talk: { borderWidth: 1, borderColor: c.line, borderRadius: 16, paddingVertical: 10, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  backdrop: { flex: 1, backgroundColor: 'rgba(23,20,30,0.24)', justifyContent: 'center', padding: 26 },
+  dialog: { padding: 24, gap: 18 },
+  editor: { minHeight: 160, fontSize: 16, lineHeight: 25, padding: 14 },
+  editorFooter: { marginTop: 4, paddingTop: 10, borderTopWidth: 1, borderColor: c.line, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 },
+  entry: { borderRadius: 14, backgroundColor: c.surface, padding: 14, gap: 6 },
+  entryHeading: { flexDirection: 'row', alignItems: 'center', gap: 9 },
 });

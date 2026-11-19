@@ -17,5 +17,5 @@ export function moveMonth(date: Date, offset: number): Date {
   return new Date(date.getFullYear(), date.getMonth() + offset, 1, 12);
 }
 
-export const moodColors = ['#F08C81', '#EFB670', '#F1CB78', '#92B4D2', '#487BA8'];
-export const moodLabels = ['Angry', 'Low', 'Okay', 'Good', 'Great'];
+export const moodColors = ['#E1CBFA', '#E7D5FA', '#E4D8FC', '#CBB0F3', '#8A4FF2'];
+export const moodLabels = ['Low', 'Meh', 'Okay', 'Good', 'Great'];

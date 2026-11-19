@@ -1,0 +1,47 @@
+[
+  {
+    "file": "03-create-account-states.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-59fd7588-dec9-4077-abb9-a94b5a8b0523.png",
+    "finalEditPrompt": "Edit this existing UI board precisely. Keep its frame count, palette, all main content, typography and layout. This is the same OkayKaba first-run flow, not a new design. Each frame 390x844 logical content, no device hardware or OS status bar. Remove EVERY top-right Skip action from EVERY frame. Remove ALL progress bars and ALL Step x of 3 labels from ALL frames. These are authentication or completion screens, never numbered setup steps. Leave that area clean or reflow the main content upward gently. Keep brand at top. Remove ALL 'Demo · This device' labels from authentication frames. In completion only, keep demo label ONLY in the last Demo ready frame; keep Account setup in the first four completion frames. Do not add any new progress, skip or percentages anywhere.\nIn any request pending frame remove top Back arrow, bottom Back, and mode switching actions. Keep only Leave this request as active navigation; spinner/pending action stays. Replace helper 'Leaving stops this screen from updating.' with 'This may still finish after you leave.' Any idle/error Back stays.\n"
+  },
+  {
+    "file": "04a-email-verification.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-1ae92905-878a-487d-ad7f-840937209ade.png",
+    "finalEditPrompt": "Edit only one text label in this existing four-panel UI board. In FOURTH rightmost panel, beneath OKAYKABA?, replace 'Demo · This device' with 'Account setup'. Preserve everything else in all four panels exactly. No other text changes, no layout changes, no new buttons, no progress tracks."
+  },
+  {
+    "file": "04b-change-email-and-links.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-1df90bd6-b293-4074-801c-2d9d45c57b10.png",
+    "finalEditPrompt": "Edit this existing UI board precisely. Keep its frame count, palette, all main content, typography and layout. This is the same OkayKaba first-run flow, not a new design. Each frame 390x844 logical content, no device hardware or OS status bar. Remove EVERY top-right Skip action from EVERY frame. Remove ALL progress bars and ALL Step x of 3 labels from ALL frames. These are authentication or completion screens, never numbered setup steps. Leave that area clean or reflow the main content upward gently. Keep brand at top. Remove ALL 'Demo · This device' labels from authentication frames. In completion only, keep demo label ONLY in the last Demo ready frame; keep Account setup in the first four completion frames. Do not add any new progress, skip or percentages anywhere.\nIn any request pending frame remove top Back arrow, bottom Back, and mode switching actions. Keep only Leave this request as active navigation; spinner/pending action stays. Replace helper 'Leaving stops this screen from updating.' with 'This may still finish after you leave.' Any idle/error Back stays.\nOn second frame DELETE footer 'This confirms your new email address for your account.' Replace it with 'Verification is still required.' Do not assert verification until final Email verified frame."
+  },
+  {
+    "file": "05-sign-in-states.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-e2e3eb12-cb80-4c53-8723-8effe6e65850.png",
+    "finalEditPrompt": "Edit two text labels only in this existing four-panel UI board. In FOURTH rightmost panel beneath OKAYKABA?, replace 'Demo · This device' with 'Account setup'. Above FIRST panel replace caption 'Sign in (Step 1 of 3, idle)' with 'Sign in'. Preserve all other content and every action exactly. No new controls, no progress trackers, no Skip."
+  },
+  {
+    "file": "07-preferred-name.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-d1eae6bc-1a85-4d32-8fdb-07d166453869.png",
+    "finalEditPrompt": "Edit ONLY the three progress bars on the FIRST attached board (optional preferred name). SECOND board is progress-bar width reference only. Increase each Name progress TRACK width to match the same relative width as the Goal board track: approximately half each mobile frame's width, centered. All three Name tracks identical width and thickness; fill exactly one third, denim #155579. Keep every word, input, button, header and all vertical positions on Name unchanged. No goal UI in output. Output same THREE Name frames, same dimensions as first image. Do not add any new elements."
+  },
+  {
+    "file": "08-practice-mood.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-19dd9db5-b968-4e19-b124-d3c61e325cd6.png",
+    "finalEditPrompt": "Edit ONLY THIRD rightmost frame in this existing three-panel practice-mood board. Add top-left Back arrow and top-right Skip in the identical positions to first and second frames. Replace helper 'This may still finish after you leave.' above Continue with 'Practice only · No mood record is created'. This is an idle Good-selected practice, no network request. Preserve ALL other content including faces and mood labels, existing progress bar, colors, dimensions, no other changes."
+  },
+  {
+    "file": "09-optional-goal.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-9911f245-9405-4ce8-b8c1-fa589809ac03.png",
+    "finalEditPrompt": "Edit this existing UI board precisely. Keep its frame count, palette, all main content, typography and layout. This is the same OkayKaba first-run flow, not a new design. Each frame 390x844 logical content, no device hardware or OS status bar. First image is edit target; second image is the approved HEADER GEOMETRY reference only. Change all headers of target to match second image's Name headers: Back left and Skip right on idle, centered brand, Demo · This device UNDER BRAND, then a centered 180px track (46% of each frame's width) at exactly same vertical position as name reference, then Step 3 of 3. Track fill full, solid denim #155579, no bright electric blue. Keep existing target main content and mood expressions unchanged. For goal's third saving panel: no Back and no Skip; brand/mode/track geometry matches idle; Leave this request helper becomes 'This may still finish after you leave.' Do not introduce any auth labels."
+  },
+  {
+    "file": "10-account-and-demo-completion.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-e9b991f4-f2c7-4761-8d58-75ba58ad660c.png",
+    "finalEditPrompt": "Edit this existing UI board precisely. Keep its frame count, palette, all main content, typography and layout. This is the same OkayKaba first-run flow, not a new design. Each frame 390x844 logical content, no device hardware or OS status bar. Remove EVERY top-right Skip action from EVERY frame. Remove ALL progress bars and ALL Step x of 3 labels from ALL frames. These are authentication or completion screens, never numbered setup steps. Leave that area clean or reflow the main content upward gently. Keep brand at top. Remove ALL 'Demo · This device' labels from authentication frames. In completion only, keep demo label ONLY in the last Demo ready frame; keep Account setup in the first four completion frames. Do not add any new progress, skip or percentages anywhere.\nIn any request pending frame remove top Back arrow, bottom Back, and mode switching actions. Keep only Leave this request as active navigation; spinner/pending action stays. Replace helper 'Leaving stops this screen from updating.' with 'This may still finish after you leave.' Any idle/error Back stays.\nRemove extraneous default top Back arrows from completion frames as well. Retain the explicit Retry save/Back to setup/Open Today/Review setup/Retry sync buttons already present. Success check should be denim rather than green."
+  },
+  {
+    "file": "11-keyboard-and-large-text.png",
+    "source": "C:\\Users\\laran\\.codex\\generated_images\\01a1f239-b626-7041-82a7-09ab5b1d9061\\exec-fefd2deb-5210-4837-9c6e-a12b6dbd8952.png",
+    "finalEditPrompt": "Edit this existing UI board precisely. Keep its frame count, palette, all main content, typography and layout. This is the same OkayKaba first-run flow, not a new design. Each frame 390x844 logical content, no device hardware or OS status bar. Change ONLY third enlarged-text practice frame: replace 'This is a practice request. Your response won't be saved.' with 'Try a check-in. This one won't be saved.' Replace first mood label Not great with Low and its face with a frown. Replace A bit down with Meh and its face with a slight frown. Keep Okay, Good, Great, use corresponding mood faces, NOT a star for Great. All five must match Low, Meh, Okay, Good, Great exactly. Keep two-column wrapping and large text, no emoji duplication. First keyboard frame keep Continue above keyboard. Second and third keep scrollability. Do not change the first two frames."
+  }
+]

@@ -4,7 +4,7 @@ The app now uses only Supabase Auth at runtime. Previous Clerk screens are prese
 
 ## Activate cloud accounts
 
-1. Create a Supabase Free project. Run supabase/migrations/202611170001_wellbeing.sql once using the SQL editor, or apply it with the Supabase CLI. Review before applying to an existing database; this migration creates new tables and policies.
+1. Create a Supabase Free project. Apply the versioned migrations in order: `supabase/migrations/202611170001_wellbeing.sql`, then `supabase/migrations/202611170002_inspiration_preferences.sql`, using the SQL editor or Supabase CLI. Apply each once. The second migration adds optional Bible verses and saved reflection IDs to preferences without replacing records or changing ownership policies. Review before applying to an existing database.
 2. Copy the project URL and public publishable key to .env.local using .env.example. Never ship a service-role/secret key. Restart Expo after changing environment variables.
 3. Enable email/password authentication and email confirmation. Configure Site URL and allowed redirect URLs for your actual localhost port (currently http://127.0.0.1:8083/** and http://localhost:8083/**) and production host. For native development builds allow reactnativeokaykaba://**; Expo Go callback URLs vary and must be configured separately. Password reset returns to /reset-password. Test verification and recovery on each platform before release.
 4. Configure a real SMTP provider for verification and recovery emails. Supabase's default mail service has testing restrictions; check your provider's free allowance and domain requirements. No email provider, domain, OAuth client, or paid plan was purchased or configured by this change.
