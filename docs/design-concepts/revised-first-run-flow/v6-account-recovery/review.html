@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OkayKaba — Account-choice review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#111820;color:#f2f5f8;font:16px/1.6 system-ui,sans-serif}main{max-width:1400px;margin:auto;padding:32px 24px 64px}h1{font-size:28px;line-height:1.25}h2{font-size:22px}a{color:#90bedf}p{max-width:850px;color:#b5bfca}nav{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0}img{display:block;width:100%;height:auto;border-radius:16px}figure{margin:32px 0}figcaption{margin:12px 0;color:#b5bfca}.note{padding:16px 20px;border:1px solid #617080;border-radius:12px}li{margin:8px 0}
+</style>
+<main><h1>OkayKaba · Account choice</h1><p>One coherent revision of the approved dark direction and default typography. Five proposed states, with recovery and navigation notes.</p>
+<div class="note">Mockups only. Google authentication requires configuration and verification. No app code or GitHub changes.</div>
+<nav><a href="navigation.md">Navigation notes</a><a href="audit.md">Audit findings</a><a href="imagegen-prompts.md">Prompts</a><a href="../v5-dark-account/review.html">Previous revision</a></nav>
+<figure><img src="01-idle-opening-cancelled.png" alt="Three dark account-choice mockups: idle with Google, email sign-up, email sign-in and demo; opening Google with Cancel; restored choices after neutral cancellation."><figcaption>1 · Idle → 2 · Opening Google → 3 · User cancellation. Cancel restores account choice.</figcaption></figure>
+<figure><img src="02-failure-stalled.png" alt="Connection failure with written recovery and all choices available; stalled Google handoff with static status, unavailable competing actions, and Cancel."><figcaption>4 · Connection failure: retry or choose another method. 5 · Stalled: cancel first, then select another method.</figcaption></figure>
+<h2>Navigation contract</h2><ul><li>Android Back and Cancel during handoff restore account choice.</li><li>Every retry is a fresh explicit attempt. Late responses cannot replace a subsequent demo choice.</li><li>Try the demo leads to the existing device-storage explanation.</li></ul>
+<h2>Audit outcome</h2><p>All five requested states are present. Button order, neutral cancellation and separate failure/stalled recovery are visible. Runtime Back, callback races, focus, contrast and text scaling still require prototype testing. See the audit for evidence and limits.</p>
+<p>Stopped for your design review. No other screens have been revised.</p></main></html>

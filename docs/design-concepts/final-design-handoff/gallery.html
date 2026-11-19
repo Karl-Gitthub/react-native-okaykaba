@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OkayKaba · Screen gallery</title>
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; color: #f2f5f8; background: #111820; font: 16px/1.5 system-ui, sans-serif; }
+main { max-width: 1200px; margin: 0 auto; padding: clamp(18px, 4vw, 56px); }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: clamp(26px, 4vw, 42px); line-height: 1.15; }
+h2 { font-size: clamp(22px, 3vw, 30px); }
+h3 { font-size: 1.12rem; }
+p { color: #b5bfca; }
+header p { margin-top: 12px; }
+nav { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 20px; }
+a { color: #a5d3f0; text-underline-offset: .18em; }
+nav a { display: flex; align-items: center; min-height: 44px; padding: 6px 12px; border: 1px solid #617080; border-radius: 8px; }
+a:focus-visible { outline: 2px solid #f2f5f8; outline-offset: 3px; }
+section { margin-top: 40px; padding-top: 14px; border-top: 1px solid #526474; }
+section > p { margin: 6px 0 18px; }
+figure { margin: 0 0 24px; padding: clamp(10px, 2vw, 20px); border: 1px solid #526474; border-radius: 14px; background: #1c2632; }
+figcaption { margin-bottom: 12px; }
+figcaption p { margin-top: 4px; }
+figure img { display: block; width: 100%; height: auto; }
+.crop { position: relative; width: 100%; max-width: var(--native-width); aspect-ratio: var(--ratio); overflow: hidden; }
+.crop img { position: absolute; width: var(--image-width); max-width: none; left: var(--image-x); top: var(--image-y); }
+.original { display: inline-block; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main id="top">
+<header>
+  <h1>OkayKaba screen gallery</h1>
+  <p>The design boards in app order, from first-run to daily use and account settings.</p>
+  <nav aria-label="Gallery sections">
+    <a href="#first-run">First-run and account access</a>
+    <a href="#today">Today and check-in</a>
+    <a href="#journal">Journal</a>
+    <a href="#history">Mood Calendar and Insights</a>
+    <a href="#activities">Activities and support</a>
+    <a href="#account">Account and preferences</a>
+  </nav>
+  <p><a href="review.md">Design handoff and navigation notes</a></p>
+</header>
+<section id="first-run" aria-labelledby="first-run-heading">
+<h2 id="first-run-heading">First-run and account access</h2>
+<p><a href="../revised-first-run-flow/v7-first-run-bridges/review.md">View design notes</a></p>
+<figure>
+  <figcaption><h3>Splash and optional breathing</h3><p>Splash, invitation, inhale and exhale. The light artwork documents the breathing sequence; the dark entry board below is the visual reference for the invitation.</p></figcaption>
+  <img src="../revised-first-run-flow/v2/01-opening-breath.png" alt="Splash and optional breathing: Splash, invitation, inhale and exhale. The light artwork documents the breathing sequence; the dark entry board below is the visual reference for the invitation." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v2/01-opening-breath.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Pause and reduced motion</h3><p>Pause and Resume, plus the static quiet-moment option.</p></figcaption>
+  <div class="crop" style="--ratio:836/843;--image-width:212.20095693779905%;--image-x:-5.023923444976076%;--image-y:-2.0166073546856467%;--native-width:836px"><img src="../revised-first-run-flow/v2/02-paused-welcome-demo.png" alt="Pause and reduced motion: Pause and Resume, plus the static quiet-moment option." loading="lazy" decoding="async"></div>
+
+</figure>
+<figure>
+  <figcaption><h3>Dark breathing and email entry</h3><p>Breathing invitation, email sign-up, sign-in and verification entry.</p></figcaption>
+  <img src="../full-app-design/01-opening-and-email.png" alt="Dark breathing and email entry: Breathing invitation, email sign-up, sign-in and verification entry." loading="lazy" decoding="async">
+  <a class="original" href="../full-app-design/01-opening-and-email.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Welcome and Google handoff</h3><p>The approved account-choice layout, the pending Google handoff, and neutral cancellation.</p></figcaption>
+  <img src="../revised-first-run-flow/v6-account-recovery/01-idle-opening-cancelled.png" alt="Welcome and Google handoff: The approved account-choice layout, the pending Google handoff, and neutral cancellation." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v6-account-recovery/01-idle-opening-cancelled.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Google failure and stalled handoff</h3><p>A failed connection restores choices. A stalled handoff offers Cancel.</p></figcaption>
+  <img src="../revised-first-run-flow/v6-account-recovery/02-failure-stalled.png" alt="Google failure and stalled handoff: A failed connection restores choices. A stalled handoff offers Cancel." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v6-account-recovery/02-failure-stalled.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Email sign-up and sign-in recovery</h3><p>Validation, pending requests, uncertain sign-up and incorrect credentials.</p></figcaption>
+  <img src="02-sign-up-and-sign-in-recovery.png" alt="Email sign-up and sign-in recovery: Validation, pending requests, uncertain sign-up and incorrect credentials." loading="lazy" decoding="async">
+  <a class="original" href="02-sign-up-and-sign-in-recovery.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Verification recovery</h3><p>Checking, still pending, connection failure, expired link and verified without an app session.</p></figcaption>
+  <img src="03-verification-recovery.png" alt="Verification recovery: Checking, still pending, connection failure, expired link and verified without an app session." loading="lazy" decoding="async">
+  <a class="original" href="03-verification-recovery.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Reset request and resend</h3><p>Forgot password, resend pending, accepted and failed, plus verified with a session.</p></figcaption>
+  <img src="06-reset-request-and-resend.png" alt="Reset request and resend: Forgot password, resend pending, accepted and failed, plus verified with a session." loading="lazy" decoding="async">
+  <a class="original" href="06-reset-request-and-resend.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Change email</h3><p>Editing, guarded commit, uncertain outcome and confirmed failure.</p></figcaption>
+  <img src="../revised-first-run-flow/v7-first-run-bridges/02-dark-change-email.png" alt="Change email: Editing, guarded commit, uncertain outcome and confirmed failure." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v7-first-run-bridges/02-dark-change-email.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Password reset recovery</h3><p>Sending, acknowledgement, reset request failure and password update failure.</p></figcaption>
+  <img src="../revised-first-run-flow/v7-first-run-bridges/03-dark-password-recovery.png" alt="Password reset recovery: Sending, acknowledgement, reset request failure and password update failure." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v7-first-run-bridges/03-dark-password-recovery.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Reset link and access recovery</h3><p>Expired reset link, new password, updating, confirmed success and expired email-change session.</p></figcaption>
+  <img src="04-password-link-and-access-recovery.png" alt="Reset link and access recovery: Expired reset link, new password, updating, confirmed success and expired email-change session." loading="lazy" decoding="async">
+  <a class="original" href="04-password-link-and-access-recovery.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Demo entry</h3><p>The device-storage explanation precedes Continue in demo. Back returns to the entry screen.</p></figcaption>
+  <div class="crop" style="--ratio:613/990;--image-width:250.57096247960845%;--image-x:-23.164763458401303%;--image-y:-0.40404040404040403%;--native-width:613px"><img src="../revised-first-run-flow/v7-first-run-bridges/01-dark-demo.png" alt="Demo entry: The device-storage explanation precedes Continue in demo. Back returns to the entry screen." loading="lazy" decoding="async"></div>
+
+</figure>
+<figure>
+  <figcaption><h3>Name, practice and goal</h3><p>Optional name, a practice check-in that creates no record, and optional goal.</p></figcaption>
+  <img src="../revised-first-run-flow/v5-dark-account/01-default-setup.png" alt="Name, practice and goal: Optional name, a practice check-in that creates no record, and optional goal." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v5-dark-account/01-default-setup.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Enlarged-text setup</h3><p>Wrapped names, larger labels and the mood choice grid.</p></figcaption>
+  <img src="../revised-first-run-flow/v5-dark-account/02-enlarged-text-only.png" alt="Enlarged-text setup: Wrapped names, larger labels and the mood choice grid." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v5-dark-account/02-enlarged-text-only.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Demo ready</h3><p>Demo setup finishes locally, then Open Today starts the first real check-in.</p></figcaption>
+  <div class="crop" style="--ratio:615/990;--image-width:249.7560975609756%;--image-x:-126.82926829268293%;--image-y:-0.40404040404040403%;--native-width:615px"><img src="../revised-first-run-flow/v7-first-run-bridges/01-dark-demo.png" alt="Demo ready: Demo setup finishes locally, then Open Today starts the first real check-in." loading="lazy" decoding="async"></div>
+
+</figure>
+<figure>
+  <figcaption><h3>Account setup completion</h3><p>Local saving, local failure and the three account sync outcomes.</p></figcaption>
+  <img src="../revised-first-run-flow/v7-first-run-bridges/04-dark-account-completion.png" alt="Account setup completion: Local saving, local failure and the three account sync outcomes." loading="lazy" decoding="async">
+  <a class="original" href="../revised-first-run-flow/v7-first-run-bridges/04-dark-account-completion.png">Open full-size board</a>
+</figure>
+<p><a href="#top">Back to gallery contents</a></p>
+</section>
+<section id="today" aria-labelledby="today-heading">
+<h2 id="today-heading">Today and check-in</h2>
+<p><a href="../today-check-in/review.md">View design notes</a></p>
+<figure>
+  <figcaption><h3>Unlogged, draft and saving</h3><p>The draft changes the orb. The weekly slot stays empty while saving.</p></figcaption>
+  <img src="../today-check-in/01-unlogged-draft-saving.png" alt="Unlogged, draft and saving: The draft changes the orb. The weekly slot stays empty while saving." loading="lazy" decoding="async">
+  <a class="original" href="../today-check-in/01-unlogged-draft-saving.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Saved and save error</h3><p>A confirmed save fills Your week. Save error keeps the choice and offers retry.</p></figcaption>
+  <img src="../today-check-in/02-saved-and-error.png" alt="Saved and save error: A confirmed save fills Your week. Save error keeps the choice and offers retry." loading="lazy" decoding="async">
+  <a class="original" href="../today-check-in/02-saved-and-error.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>All five activity cards</h3><p>Swipe from Journal and Self-care through To-do, Daily Inspiration, and Talk it through.</p></figcaption>
+  <img src="05-today-activity-entry.png" alt="All five activity cards: Swipe from Journal and Self-care through To-do, Daily Inspiration, and Talk it through." loading="lazy" decoding="async">
+  <a class="original" href="05-today-activity-entry.png">Open full-size board</a>
+</figure>
+<p><a href="#top">Back to gallery contents</a></p>
+</section>
+<section id="journal" aria-labelledby="journal-heading">
+<h2 id="journal-heading">Journal</h2>
+<p><a href="../journal/review.md">View design notes</a></p>
+<figure>
+  <figcaption><h3>Writing and draft return</h3><p>Empty Journal, keyboard-open writing and Resume draft.</p></figcaption>
+  <img src="../journal/01-write-and-resume.png" alt="Writing and draft return: Empty Journal, keyboard-open writing and Resume draft." loading="lazy" decoding="async">
+  <a class="original" href="../journal/01-write-and-resume.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Saving, saved and save error</h3><p>Recent entries shows a record after confirmation. A failed save retains the writing.</p></figcaption>
+  <img src="../journal/02-save-and-recover.png" alt="Saving, saved and save error: Recent entries shows a record after confirmation. A failed save retains the writing." loading="lazy" decoding="async">
+  <a class="original" href="../journal/02-save-and-recover.png">Open full-size board</a>
+</figure>
+<p><a href="#top">Back to gallery contents</a></p>
+</section>
+<section id="history" aria-labelledby="history-heading">
+<h2 id="history-heading">Mood Calendar and Insights</h2>
+<p><a href="../mood-calendar/review.md">View design notes</a></p>
+<figure>
+  <figcaption><h3>Monthly calendar states</h3><p>Empty month, saved mood day and selected day with no check-in.</p></figcaption>
+  <img src="../mood-calendar/01-month-and-day-states.png" alt="Monthly calendar states: Empty month, saved mood day and selected day with no check-in." loading="lazy" decoding="async">
+  <a class="original" href="../mood-calendar/01-month-and-day-states.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Monthly and Year in Pixels</h3><p>The final mode switch, accurate 365-day sample year, written mood legend and selected-day detail.</p></figcaption>
+  <img src="01-calendar-month-and-year.png" alt="Monthly and Year in Pixels: The final mode switch, accurate 365-day sample year, written mood legend and selected-day detail." loading="lazy" decoding="async">
+  <a class="original" href="01-calendar-month-and-year.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Insights</h3><p>Last seven days and links to Journal and Daily tasks.</p></figcaption>
+  <div class="crop" style="--ratio:540/1165;--image-width:233.5185185185185%;--image-x:-12.222222222222221%;--image-y:-1.0300429184549356%;--native-width:540px"><img src="../full-app-design/02-insights-and-year.png" alt="Insights: Last seven days and links to Journal and Daily tasks." loading="lazy" decoding="async"></div>
+
+</figure>
+<p><a href="#top">Back to gallery contents</a></p>
+</section>
+<section id="activities" aria-labelledby="activities-heading">
+<h2 id="activities-heading">Activities and support</h2>
+<p><a href="review.md#today-activities-and-back-destinations">View design notes</a></p>
+<figure>
+  <figcaption><h3>Tasks and self-care</h3><p>Daily tasks, Edit task, Self-care and active breathing.</p></figcaption>
+  <img src="../full-app-design/03-tasks-and-self-care.png" alt="Tasks and self-care: Daily tasks, Edit task, Self-care and active breathing." loading="lazy" decoding="async">
+  <a class="original" href="../full-app-design/03-tasks-and-self-care.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Daily Inspiration and Support</h3><p>Daily quote, saved quotes, optional Bible verses, unavailable chat and support resources.</p></figcaption>
+  <img src="../full-app-design/04-inspiration-and-support.png" alt="Daily Inspiration and Support: Daily quote, saved quotes, optional Bible verses, unavailable chat and support resources." loading="lazy" decoding="async">
+  <a class="original" href="../full-app-design/04-inspiration-and-support.png">Open full-size board</a>
+</figure>
+<p><a href="#top">Back to gallery contents</a></p>
+</section>
+<section id="account" aria-labelledby="account-heading">
+<h2 id="account-heading">Account and preferences</h2>
+<p><a href="../full-app-design/review.md#4-account-and-settings">View design notes</a></p>
+<figure>
+  <figcaption><h3>Account settings</h3><p>Demo Account, Edit profile, Appearance, Privacy &amp; data and Help.</p></figcaption>
+  <img src="../full-app-design/05-account-and-preferences.png" alt="Account settings: Demo Account, Edit profile, Appearance, Privacy &amp; data and Help." loading="lazy" decoding="async">
+  <a class="original" href="../full-app-design/05-account-and-preferences.png">Open full-size board</a>
+</figure>
+<figure>
+  <figcaption><h3>Signed-in Account and data</h3><p>Signed-in settings, privacy and an explicit demo import confirmation.</p></figcaption>
+  <img src="../full-app-design/06-account-data.png" alt="Signed-in Account and data: Signed-in settings, privacy and an explicit demo import confirmation." loading="lazy" decoding="async">
+  <a class="original" href="../full-app-design/06-account-data.png">Open full-size board</a>
+</figure>
+<p><a href="#top">Back to gallery contents</a></p>
+</section>
+</main>
+</body>
+</html>
